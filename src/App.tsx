@@ -7,6 +7,7 @@ import {
 } from "@react-three/drei";
 import Scene from "./components/Scene";
 import Parrot from "./components/Parrot";
+import Targets from "./components/Targets";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
       <Environment background={false} files={"/assets/envmap.hdr"} />
       <Scene />
       <Parrot />
+      <Targets />
       <PerspectiveCamera makeDefault position={[0, 10, 10]} />
       <OrbitControls target={[0, 0, 0]} />
     </>

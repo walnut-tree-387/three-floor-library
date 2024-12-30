@@ -6,10 +6,38 @@ let maxValocity = 0.04;
 let turbo = 0;
 const controls: { [key: string]: boolean } = {};
 window.addEventListener("keyup", (e) => {
-  controls[e.key.toLocaleLowerCase()] = true;
+  switch (e.key) {
+    case 'ArrowUp':
+        controls.arrowUp = true;
+        break;
+    case 'ArrowDown':
+        controls.arrowDown = true;
+        break;
+    case 'ArrowLeft':
+        controls.arrowLeft = true;
+        break;
+    case 'ArrowRight':
+        controls.arrowRight = true;
+        break;
+    default : controls[e.key.toLocaleLowerCase()] = true;
+  }
 });
 window.addEventListener("keydown", (e) => {
-  controls[e.key.toLocaleLowerCase()] = false;
+  switch (e.key) {
+    case 'ArrowUp':
+        controls.arrowUp = false;
+        break;
+    case 'ArrowDown':
+        controls.arrowDown = false;
+        break;
+    case 'ArrowLeft':
+        controls.arrowLeft = false;
+        break;
+    case 'ArrowRight':
+        controls.arrowRight = false;
+        break;
+  default : controls[e.key.toLocaleLowerCase()] = false;
+  }
 });
 const easeOutQuad = function (x: any) {
   return 1 - (1 - x) * (1 - x);
@@ -29,28 +57,22 @@ const updateParrotAxis = function (
   if (Math.abs(pitchVelocity) > maxValocity)
     pitchVelocity = Math.sign(pitchVelocity) * maxValocity;
 
-  if (controls["a"]) {
+  if (controls.arrowLeft) {
     jawvelocity += 0.025;
   }
-  if (controls["d"]) {
+  if (controls.arrowRight) {
     jawvelocity -= 0.025;
   }
-  if (controls["w"]) {
+  if (controls.arrowUp) {
     pitchVelocity += 0.025;
   }
-  if (controls["s"]) {
+  if (controls.arrowDown) {
     pitchVelocity -= 0.025;
   }
 
   //Reset Mode
   if (controls["r"]) {
-    jawvelocity = 0;
-    pitchVelocity = 0;
-    turbo = 0;
-    x.set(1, 0, 0);
-    y.set(0, 1, 0);
-    z.set(0, 0, 1);
-    parrotPos.set(0, 3, 7);
+    window.location.reload();
   }
   x.applyAxisAngle(z, jawvelocity);
   y.applyAxisAngle(z, jawvelocity);
@@ -63,7 +85,7 @@ const updateParrotAxis = function (
   z.normalize();
 
   if (controls.shift) {
-    turbo *= 0.025;
+    turbo += 0.025;
   } else {
     turbo *= 0.95;
   }
@@ -72,6 +94,6 @@ const updateParrotAxis = function (
   camera.fov = 45 + turboSpeed * 900;
   camera.updateProjectionMatrix();
 
-  parrotPos.add(z.clone().multiplyScalar(-parrotSpeed));
+  parrotPos.add(z.clone().multiplyScalar(-parrotSpeed -turboSpeed));
 };
 export default updateParrotAxis;
