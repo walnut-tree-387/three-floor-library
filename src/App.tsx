@@ -1,21 +1,21 @@
-import { useState } from "react";
 import "./App.css";
-import { Canvas } from "react-three-fiber";
-import Experience from "../src/components/Experience";
-
+import SphereEnv from "../src/components/SphereEnv";
+import {
+  Environment,
+  OrbitControls,
+  PerspectiveCamera,
+} from "@react-three/drei";
+import Scene from "./components/Scene";
+import Parrot from "./components/Parrot";
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <Canvas
-        camera={{
-          fov: 64,
-          position: [2.3, 1.5, 2.3],
-        }}
-      >
-        <Experience />
-      </Canvas>
+      <SphereEnv />
+      <Environment background={false} files={"/assets/envmap.hdr"} />
+      <Scene />
+      <Parrot />
+      <PerspectiveCamera makeDefault position={[0, 10, 10]} />
+      <OrbitControls target={[0, 0, 0]} />
     </>
   );
 }
