@@ -1,4 +1,4 @@
-import { Vector3 } from "react-three-fiber";
+
 let jawvelocity = 0;
 let pitchVelocity = 0;
 let parrotSpeed = 0.006;

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Quaternion, TorusGeometry, Vector3, BufferGeometry } from "three";
 import { mergeBufferGeometries } from "three-stdlib";
 
